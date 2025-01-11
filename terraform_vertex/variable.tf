@@ -1,24 +1,24 @@
 variable "project_id" {
-    descripcion = ""
+    description = ""
     type = string
 }
 
 variable "dataset_id" {
-    descripcion = ""
+    description = ""
     type = string
 }
 
 variable "table_id" {
-    descripcion = ""
+    description = ""
     type = string
 }
 
 variable "region" {
-    descripcion = ""
+    description = ""
     type = string
 }
 
 variable "rutine_id" {
-    descripcion = ""
+    description = ""
     type = string
 }

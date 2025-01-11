@@ -41,5 +41,5 @@ jobs:
       run: |
         gcloud container clusters get-credentials autopilot-cluster-1 --region us-central1
         docker pull us-central1-docker.pkg.dev/$GOOGLE_PROJECT/images/$IMAGE_NAME:latest
-        kubeclt apply -f resources.yaml
+        kubectl apply -f resources.yaml
     
