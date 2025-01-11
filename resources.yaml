@@ -1,0 +1,63 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "fastapi-1"
+  namespace: "default"
+  labels:
+    app: "fastapi-1"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "fastapi-1"
+  template:
+    metadata:
+      labels:
+        app: "fastapi-1"
+    spec:
+      containers:
+      - name: "fastapi-1"
+        image: "us-central1-docker.pkg.dev/trim-odyssey-390415/images/fastapi:latest"
+
+---
+apiVersion: "autoscaling/v2"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "fastapi-1-hpa-ypna"
+  namespace: "default"
+  labels:
+    app: "fastapi-1"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "fastapi-1"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: "Resource"
+    resource:
+      name: "cpu"
+      target:
+        type: "Utilization"
+        averageUtilization: 80
+
+
+
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "fastapi-service"
+  namespace: "default"
+  labels:
+    app: "fastapi-1"
+spec:
+  ports:
+  - protocol: "TCP"
+    port: 80
+  selector:
+    app: "fastapi-1"
+  type: "LoadBalancer"
+  loadBalancerIP: ""
